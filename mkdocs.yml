@@ -8,4 +8,4 @@ plugins:
   - mkdocstrings:
       handlers:
         python:
-          paths: [cp_snippets]
+          paths: ["."]
