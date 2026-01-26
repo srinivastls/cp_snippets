@@ -1,0 +1,11 @@
+site_name: cp-snippets
+
+theme:
+  name: material
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [cp_snippets]
