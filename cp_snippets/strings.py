@@ -116,7 +116,10 @@ def manacher(s: str) -> List[int]:
     R = 0
     
     for i in range(1, n - 1):
-        P[i] = (R > i) and min(R - i, P[2 * C - i]) # equals to min(R - i, P_mirror)
+        if i < R:
+            P[i] = min(R - i, P[2 * C - i])
+        else:
+            P[i] = 0
         
         # Attempt to expand palindrome centered at i
         while t[i + 1 + P[i]] == t[i - 1 - P[i]]:

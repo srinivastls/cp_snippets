@@ -1,5 +1,8 @@
 site_name: cp-snippets
 
+nav:
+  - Home: index.md
+
 theme:
   name: material
 

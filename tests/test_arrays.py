@@ -7,7 +7,8 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 
 from pycp.arrays import (
     get_prefix_sum, query_range_sum, DifferenceArray,
-    sliding_window_sum, sliding_window_max, max_subarray_sum, two_sum_sorted
+    sliding_window_sum, sliding_window_max, max_subarray_sum, two_sum_sorted,
+    binary_search, lower_bound, upper_bound, prefix_sum_2d, query_range_sum_2d
 )
 
 class TestArrayUtils(unittest.TestCase):
@@ -47,6 +48,23 @@ class TestArrayUtils(unittest.TestCase):
         self.assertEqual(two_sum_sorted(arr, 9), (0, 1))
         self.assertEqual(two_sum_sorted(arr, 20), None)
         self.assertEqual(two_sum_sorted([2, 3, 4], 6), (0, 2))
+
+    def test_binary_search_helpers(self):
+        arr = [1, 3, 3, 5, 7]
+        self.assertEqual(binary_search(arr, 5), 3)
+        self.assertEqual(binary_search(arr, 2), -1)
+        self.assertEqual(lower_bound(arr, 3), 1)
+        self.assertEqual(upper_bound(arr, 3), 3)
+
+    def test_prefix_sum_2d(self):
+        grid = [
+            [1, 2, 3],
+            [4, 5, 6],
+        ]
+        ps = prefix_sum_2d(grid)
+        self.assertEqual(query_range_sum_2d(ps, 0, 0, 0, 0), 1)
+        self.assertEqual(query_range_sum_2d(ps, 0, 0, 1, 2), 21)
+        self.assertEqual(query_range_sum_2d(ps, 0, 1, 1, 1), 7)
 
 if __name__ == '__main__':
     unittest.main()

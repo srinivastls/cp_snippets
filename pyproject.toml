@@ -15,4 +15,4 @@ license = { text = "MIT" }
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["cp_snippets"]
+include = ["cp_snippets", "pycp"]

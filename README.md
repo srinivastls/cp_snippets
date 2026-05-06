@@ -3,7 +3,7 @@
 
 [![PyPI version](https://img.shields.io/pypi/v/cp-snippets.svg)](https://pypi.org/project/cp-snippets/)
 [![Python versions](https://img.shields.io/pypi/pyversions/cp-snippets.svg)](https://pypi.org/project/cp-snippets/)
-[![Docs](https://img.shields.io/badge/docs-online-blue.svg)](https://<GITHUB_USERNAME>.github.io/<REPO_NAME>/)
+[![Docs](https://img.shields.io/badge/docs-online-blue.svg)](https://srinivastls.github.io/cp_snippets/)
 [![License](https://img.shields.io/pypi/l/cp-snippets.svg)](LICENSE)
 
 Small, fast, and reusable **competitive programming snippets** for Python.  
@@ -15,7 +15,7 @@ Built for **GATE / ICPC / Codeforces / LeetCode** preparation.
 
 ```bash
 pip install cp-snippets
-````
+```
 
 ---
 
@@ -34,10 +34,16 @@ print(binary_search(arr, 7))  # 3
 
 | Module               | Description                              |
 | -------------------- | ---------------------------------------- |
-| `cp_snippets.arrays` | Binary search, prefix sums, two pointers |
-| `cp_snippets.graphs` | BFS, DFS, graph traversal                |
-| `cp_snippets.math`   | GCD, modular arithmetic                  |
-| `cp_snippets.dp`     | Common DP templates                      |
+| `cp_snippets.arrays` | Binary search, prefix sums, windows      |
+| `cp_snippets.bit_utils` | Bit manipulation helpers              |
+| `cp_snippets.dp`     | Common DP templates (LIS, knapsack)      |
+| `cp_snippets.graphs` | BFS/DFS, DSU, Dijkstra, topo sort        |
+| `cp_snippets.io`     | Fast input/output helpers                |
+| `cp_snippets.math_utils` | GCD/LCM, modular arithmetic, sieve   |
+| `cp_snippets.math`   | Alias of `cp_snippets.math_utils`        |
+| `cp_snippets.misc`   | Small helpers (ceil div, compression)    |
+| `cp_snippets.strings` | KMP/Z, rolling hash, Manacher           |
+| `cp_snippets.trees`  | Fenwick, segment tree, LCA               |
 
 ---
 
@@ -76,5 +82,3 @@ If you add a new snippet:
 ## 📄 License
 
 MIT License © Lakshmi Srinivas
-
-```

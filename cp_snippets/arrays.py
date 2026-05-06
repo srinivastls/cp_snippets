@@ -1,5 +1,56 @@
-from typing import List, Tuple, Optional
+from __future__ import annotations
+
+from bisect import bisect_left, bisect_right
+from typing import Callable, List, Optional, Sequence, Tuple, TypeVar
 from collections import deque
+
+
+T = TypeVar("T")
+
+
+def binary_search(arr: Sequence[T], target: T, *, key: Optional[Callable[[T], T]] = None) -> int:
+    """Binary search in a sorted array.
+
+    Args:
+        arr: Sorted sequence.
+        target: Value to search.
+        key: Optional transform applied to elements before comparison.
+
+    Returns:
+        Index of `target` if found, otherwise -1.
+    """
+    lo, hi = 0, len(arr) - 1
+    if key is None:
+        while lo <= hi:
+            mid = (lo + hi) // 2
+            if arr[mid] == target:
+                return mid
+            if arr[mid] < target:
+                lo = mid + 1
+            else:
+                hi = mid - 1
+        return -1
+
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        v = key(arr[mid])
+        if v == target:
+            return mid
+        if v < target:
+            lo = mid + 1
+        else:
+            hi = mid - 1
+    return -1
+
+
+def lower_bound(arr: Sequence[T], target: T) -> int:
+    """Returns the first index i such that arr[i] >= target in a sorted array."""
+    return bisect_left(arr, target)
+
+
+def upper_bound(arr: Sequence[T], target: T) -> int:
+    """Returns the first index i such that arr[i] > target in a sorted array."""
+    return bisect_right(arr, target)
 
 def get_prefix_sum(arr: List[int]) -> List[int]:
     """
@@ -28,6 +79,9 @@ class DifferenceArray:
         self.n = len(arr)
         # diff array size is n+1 to handle updates ending at n-1 effortlessly
         self.diff = [0] * (self.n + 1)
+        if self.n == 0:
+            return
+
         self.diff[0] = arr[0]
         for i in range(1, self.n):
             self.diff[i] = arr[i] - arr[i - 1]
@@ -36,6 +90,10 @@ class DifferenceArray:
         """
         Adds val to arr[l...r] (inclusive).
         """
+        if self.n == 0:
+            raise ValueError("Cannot update an empty DifferenceArray")
+        if not (0 <= l <= r < self.n):
+            raise IndexError("update range out of bounds")
         self.diff[l] += val
         self.diff[r + 1] -= val
 
@@ -43,11 +101,43 @@ class DifferenceArray:
         """
         Reconstructs and returns the modified array.
         """
+        if self.n == 0:
+            return []
         arr = [0] * self.n
         arr[0] = self.diff[0]
         for i in range(1, self.n):
             arr[i] = arr[i - 1] + self.diff[i]
         return arr
+
+
+def prefix_sum_2d(grid: List[List[int]]) -> List[List[int]]:
+    """Builds 2D prefix sums.
+
+    Returns `ps` of shape (n+1) x (m+1) where:
+    ps[i][j] = sum of grid[0..i-1][0..j-1]
+    """
+    if not grid or not grid[0]:
+        return [[0]]
+
+    n, m = len(grid), len(grid[0])
+    ps = [[0] * (m + 1) for _ in range(n + 1)]
+    for i in range(n):
+        row_acc = 0
+        for j in range(m):
+            row_acc += grid[i][j]
+            ps[i + 1][j + 1] = ps[i][j + 1] + row_acc
+    return ps
+
+
+def query_range_sum_2d(ps: List[List[int]], r1: int, c1: int, r2: int, c2: int) -> int:
+    """Rectangle sum query on a 2D prefix sum array.
+
+    Args:
+        ps: 2D prefix sum array from `prefix_sum_2d`.
+        r1, c1: Top-left (inclusive).
+        r2, c2: Bottom-right (inclusive).
+    """
+    return ps[r2 + 1][c2 + 1] - ps[r1][c2 + 1] - ps[r2 + 1][c1] + ps[r1][c1]
 
 
 def sliding_window_sum(arr: List[int], k: int) -> List[int]:
